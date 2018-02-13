@@ -79,8 +79,8 @@ def generate_proposals(predictor, test_data, imdb, vis=False, thresh=0.):
         if vis:
             vis_all_detection(data_dict['data'].asnumpy(), [dets], ['obj'], scale)
 
-        print 'generating %d/%d' % (i + 1, imdb.num_images), 'proposal %d' % (dets.shape[0]), \
-            'data %.4fs net %.4fs' % (t1, t2)
+        print('generating %d/%d' % (i + 1, imdb.num_images), 'proposal %d' % (dets.shape[0]), \
+            'data %.4fs net %.4fs' % (t1, t2))
         i += 1
 
     assert len(imdb_boxes) == imdb.num_images, 'calculations not complete'
@@ -99,7 +99,7 @@ def generate_proposals(predictor, test_data, imdb, vis=False, thresh=0.):
         with open(full_rpn_file, 'wb') as f:
             cPickle.dump(original_boxes, f, cPickle.HIGHEST_PROTOCOL)
 
-    print 'wrote rpn proposals to {}'.format(rpn_file)
+    print('wrote rpn proposals to {}'.format(rpn_file))
     return imdb_boxes
 
 def im_detect_mask(predictor, data_batch, data_names, scale=1):
@@ -188,7 +188,7 @@ def pred_eval_mask(predictor, test_data, imdb, roidb, result_path, vis=False, th
                            'masks': masks_this_image})
         t3 = time.time() - t
         t = time.time()
-        print 'testing {}/{} data {:.4f}s net {:.4f}s post {:.4f}s'.format(i, imdb.num_images, t1, t2, t3)
+        print('testing {}/{} data {:.4f}s net {:.4f}s post {:.4f}s'.format(i, imdb.num_images, t1, t2, t3))
         i += 1
     results_pack = {'all_boxes': all_boxes,
                     'all_masks': all_masks,
@@ -318,7 +318,7 @@ def draw_detection_mask(im_array, boxes_this_image, masks_this_image, scale, fil
             target = im[bbox[1]: bbox[3], bbox[0]: bbox[2], c] + mask_color * mask
             target[target >= 255] = 255
             im[bbox[1]: bbox[3], bbox[0]: bbox[2], c] = target
-    print filename
+    print(filename)
     cv2.imwrite(filename, im)
 
 def draw_detection(im_array, boxes_this_image, scale, filename):
@@ -349,5 +349,5 @@ def draw_detection(im_array, boxes_this_image, scale, filename):
             cv2.rectangle(im, (bbox[0], bbox[1]), (bbox[2], bbox[3]), color=color, thickness=2)
             cv2.putText(im, '%s %.3f' % (class_names[j], score), (bbox[0], bbox[1] + 10),
                         color=color_white, fontFace=cv2.FONT_HERSHEY_COMPLEX, fontScale=0.5)
-    print filename
+    print(filename)
     cv2.imwrite(filename, im)

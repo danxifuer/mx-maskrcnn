@@ -145,7 +145,7 @@ def parse_args():
 def main():
     args = parse_args()
     ctx = mx.gpu(args.gpu)
-    print args
+    print(args)
     demo_maskrcnn(network = args.network, 
                   ctx = ctx,
                   prefix = args.prefix,
