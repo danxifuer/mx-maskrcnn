@@ -14,11 +14,11 @@ roidb extended format [image_index]
 
 import numpy as np
 import numpy.random as npr
-from ..config import config
-from ..io.image import get_image, tensor_vstack
-from ..processing.bbox_transform import bbox_overlaps, nonlinear_transform
-from ..processing.bbox_regression import expand_bbox_regression_targets
-from ..pycocotools.mask import decode
+from rcnn.config import config
+from rcnn.io.image import get_image, tensor_vstack
+from rcnn.processing.bbox_transform import bbox_overlaps, nonlinear_transform
+from rcnn.processing.bbox_regression import expand_bbox_regression_targets
+from rcnn.pycocotools.mask import decode
 bbox_transform = nonlinear_transform
 
 def get_rcnn_testbatch(roidb):

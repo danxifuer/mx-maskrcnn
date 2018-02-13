@@ -5,10 +5,10 @@ Cityscape Database
 import cv2
 import os
 import numpy as np
-import cPickle
+import pickle as cPickle
 import PIL.Image as Image
-from imdb import IMDB
-from ..processing.bbox_transform import bbox_overlaps
+from rcnn.dataset.imdb import IMDB
+from rcnn.processing.bbox_transform import bbox_overlaps
 
 class Cityscape(IMDB):
     def __init__(self, image_set, root_path, dataset_path):

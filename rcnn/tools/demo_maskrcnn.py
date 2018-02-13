@@ -2,12 +2,12 @@ import argparse
 import pprint
 import mxnet as mx
 
-from ..config import config, default, generate_config
-from ..symbol import *
-from ..dataset import *
-from ..core.loader import TestLoader
-from ..core.tester import Predictor, pred_eval_mask, pred_demo_mask
-from ..utils.load_model import load_param
+from rcnn.config import config, default, generate_config
+from rcnn.symbol import *
+from rcnn.dataset import *
+from rcnn.core.loader import TestLoader
+from rcnn.core.tester import Predictor, pred_eval_mask, pred_demo_mask
+from rcnn.utils.load_model import load_param
 import pdb
 
 def demo_maskrcnn(network, dataset, image_set, root_path, dataset_path, result_path,

@@ -1,16 +1,16 @@
 """
 This file has functions about generating bounding box regression targets
 """
-from ..pycocotools.mask import encode
+from rcnn.pycocotools.mask import encode
 import numpy as np
 
-from bbox_transform import bbox_overlaps, nonlinear_transform
+from rcnn.processing.bbox_transform import bbox_overlaps, nonlinear_transform
 from rcnn.config import config
 import math
 import cv2
 import PIL.Image as Image
 import threading
-import Queue
+import queue as Queue
 
 bbox_transform = nonlinear_transform
 
@@ -218,7 +218,7 @@ def add_mask_targets(roidb):
             flipped = roidb[im_i]['flipped']
             roidb[im_i]['mask_targets'], roidb[im_i]['mask_labels'], roidb[im_i]['mask_inds'] = \
                 compute_bbox_mask_targets_and_label(rois, max_overlaps, max_classes, ins_seg, flipped)
-    threads = [threading.Thread(target=process, args=()) for i in xrange(10)]
+    threads = [threading.Thread(target=process, args=()) for i in range(10)]
     for t in threads: t.start()
     for t in threads: t.join()
     # Single thread

@@ -1,10 +1,10 @@
-import cPickle
+import pickle as cPickle
 import os
 import time
 import mxnet as mx
 import numpy as np
 
-from module import MutableModule
+from rcnn.core.module import MutableModule
 from rcnn.config import config
 from rcnn.io import image
 from rcnn.processing.bbox_transform import nonlinear_pred, clip_boxes
@@ -148,10 +148,10 @@ def pred_eval_mask(predictor, test_data, imdb, roidb, result_path, vis=False, th
     i = 0
     t = time.time()
     results_list = []
-    all_boxes = [[[] for _ in xrange(num_images)]
-                 for _ in xrange(imdb.num_classes)]
-    all_masks = [[[] for _ in xrange(num_images)]
-                 for _ in xrange(imdb.num_classes)]
+    all_boxes = [[[] for _ in range(num_images)]
+                 for _ in range(imdb.num_classes)]
+    all_masks = [[[] for _ in range(num_images)]
+                 for _ in range(imdb.num_classes)]
     for im_info, data_batch in test_data:
         roi_rec = roidb[i]
         t1 = time.time() - t
@@ -227,10 +227,10 @@ def pred_demo_mask(predictor, test_data, imdb, roidb, result_path, vis=False, th
 
         CLASSES = imdb.classes
 
-        all_boxes = [[[] for _ in xrange(num_images)]
-                     for _ in xrange(imdb.num_classes)]
-        all_masks = [[[] for _ in xrange(num_images)]
-                     for _ in xrange(imdb.num_classes)]
+        all_boxes = [[[] for _ in range(num_images)]
+                     for _ in range(imdb.num_classes)]
+        all_masks = [[[] for _ in range(num_images)]
+                     for _ in range(imdb.num_classes)]
         label = np.argmax(scores, axis=1)
         label = label[:, np.newaxis]
 
@@ -295,7 +295,8 @@ def draw_detection_mask(im_array, boxes_this_image, masks_this_image, scale, fil
     color_white = (255, 255, 255)
     im = image.transform_inverse(im_array.asnumpy(), config.PIXEL_MEANS)
     # change to bgr
-    im = cv2.cvtColor(im, cv2.cv.CV_RGB2BGR)
+    # im = cv2.cvtColor(im, cv2.cv.CV_RGB2BGR)
+    im = cv2.cvtColor(im, cv2.COLOR_RGB2BGR)
     for j, name in enumerate(class_names):
         if name == '__background__':
             continue
@@ -305,7 +306,7 @@ def draw_detection_mask(im_array, boxes_this_image, masks_this_image, scale, fil
         for i in range(len(dets)):
             bbox = dets[i, :4] * scale
             score = dets[i, -1]
-            bbox = map(int, bbox)
+            bbox = list(map(int, bbox))
             cv2.rectangle(im, (bbox[0], bbox[1]), (bbox[2], bbox[3]), color=color, thickness=2)
             cv2.putText(im, '%s %.3f' % (class_names[j], score), (bbox[0], bbox[1] + 10),
                         color=color_white, fontFace=cv2.FONT_HERSHEY_COMPLEX, fontScale=0.5)

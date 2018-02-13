@@ -10,9 +10,9 @@ basic format [image_index]
 """
 
 import os
-import cPickle
+import pickle as cPickle
 import numpy as np
-from ..processing.bbox_transform import bbox_overlaps
+from rcnn.processing.bbox_transform import bbox_overlaps
 import pdb
 
 class IMDB(object):
